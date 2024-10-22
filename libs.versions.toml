@@ -1,0 +1,11 @@
+
+# key convention for keys: use the exact 'Artifact'-name with '.' replaced by '-'
+# and original '-' replaced by camelCase
+
+[versions]
+io-spring-dependencyManagement = "1.1.6"
+org-springframework-boot = "3.3.4"
+
+[plugins]
+io-spring-dependencyManagement = { id = "io.spring.dependency-management", version.ref = "io-spring-dependencyManagement" }
+org-springframework-boot = { id = "org.springframework.boot", version.ref = "org-springframework-boot" }

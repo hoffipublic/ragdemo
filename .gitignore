@@ -37,7 +37,8 @@ out/
 .idea/*
 !.idea/scopes/
 !.idea/fileColors.xml
-!.idea/workspace.xml
+#!.idea/workspace.xml
+
 
 ### VS Code ###
 .vscode/
@@ -59,4 +60,3 @@ logback.out.xml
 backup/*
 /generated/
 **/generated/*
-
