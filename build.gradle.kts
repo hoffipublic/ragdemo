@@ -1,7 +1,9 @@
-import org.gradle.model.internal.core.ModelNodes.withType
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     java
+    application
     alias(libs.plugins.org.springframework.boot)
     alias(libs.plugins.io.spring.dependencyManagement)
 }
@@ -46,6 +48,37 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+val secrets: Properties = Properties().apply {
+    load(rootProject.file("secrets/secrets.properties").reader())
+}
+fun setEnvironmentVariablesFromFiles(secrets: Properties, theScope: JavaExec) {
+    val errors: MutableList<String> = mutableListOf()
+    val neededSecretKeys = mutableMapOf(
+        Pair("spring.ai.openai.api-key", false),
+        Pair("spring.ai.openai.chat.api-key", false),
+    )
+    theScope.apply {
+        environment("DB_HOST", "https://nowhere")
+        //environment("spring__ai__openai__api_key", "HARDCODED_APIKEY")
+        //environment("spring__ai__openai__chat__api_key", "HARDCODED_CHAT_APIKEY")
+        for (prop in secrets) {
+            if ("${prop.value}".isBlank()) { errors.add("secrets/secrets.properties key `${prop.key}` is illegal to be empty") }
+            neededSecretKeys["${prop.key}"] = true
+            environment("${prop.key}".replace("-", "_").replace(".", "__"), "${prop.value}")
+        }
+        if (errors.isNotEmpty()) {
+            throw GradleException(errors.joinToString("\n", "\n", "\n"))
+        }
+        val missingSecretKeys = neededSecretKeys.filterValues { !it }.keys
+        if (missingSecretKeys.isNotEmpty()) {
+            throw GradleException("secrets/secrets.properties missing keys:${missingSecretKeys.joinToString("\n", "\n", "\n")}")
+        }
+    }
+}
+val bootRun by tasks.getting(JavaExec::class) {
+    setEnvironmentVariablesFromFiles(secrets, this)
 }
 
 tasks {
