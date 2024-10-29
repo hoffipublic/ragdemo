@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    # url: "jdbc:postgresql://localhost:64330/unittestdb" # "jdbc:tc:postgresql:latest:///unittestdb"
+    url: "jdbc:tc:postgresql:16:///unittestdb"
+    # username: testUser
+    # password: testSecret
+    driver-class-name: "org.testcontainers.jdbc.ContainerDatabaseDriver"
+  flyway: # migrations also in src/main/resources/db/migration/*.sql
+    enabled: true
+    locations: classpath:db/migration,classpath:db/test-migration

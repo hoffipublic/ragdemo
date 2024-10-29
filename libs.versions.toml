@@ -5,6 +5,14 @@
 [versions]
 io-spring-dependencyManagement = "1.1.6"
 org-springframework-boot = "3.3.4"
+# springdoc-openapi-ui = "1.8.0"
+springdoc-openapi-starter-webmvc-ui = "2.6.0"
+
+cucumber-java = "7.20.1"
+
+[libraries]
+# springdoc-openapi-ui = { module = "org.springdoc:springdoc-openapi-ui", version.ref = "springdoc-openapi-ui" }
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi-starter-webmvc-ui" }
 
 [plugins]
 io-spring-dependencyManagement = { id = "io.spring.dependency-management", version.ref = "io-spring-dependencyManagement" }

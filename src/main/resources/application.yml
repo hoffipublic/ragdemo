@@ -1,0 +1,80 @@
+logging:
+  level:
+    com.hoffi.ai.ragdemo: DEBUG
+    web: DEBUG
+
+spring:
+  application:
+    name: ragdemo
+  # secrets defined in secrets/secrets.properties
+  # ENV VAR name by replacing '-' with '__' and '.' with '_'
+  # will be read and set in build.gradle.kts
+  ai:
+    openai:
+      api-key: "${spring__ai__openai__api_key}"
+      chat:
+        api-key: "${spring__ai__openai__chat__api_key}"
+        options:
+          model: "gpt-3.5-turbo"
+      embedding:
+        enabled: true
+        embeddings-path: "/v1/embeddings"
+        options:
+          model: "text-embedding-ada-002"
+        metadata-mode: EMBED
+  servlet:
+    multipart.max-file-size: "50MB"
+    multipart.max-request-size: "50MB"
+  jpa:
+    properties.hibernate:
+      ddl-auto: create
+      show_sql: true
+      use_sql_comments: true
+      format_sql: true
+    # defer-datasource-initialization: true
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    url: "jdbc:postgresql://localhost:5432/ragdemo"
+  flyway: # migrations in src/main/resources/db/migration/*.sql
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    #url: "xyz"
+
+
+springdoc:
+  # http://server:port/context-path/swagger-ui.html and the OpenAPI description url for json format: http://server:port/context-path/v3/api-docs
+  # and if exposing via actuator (in application.yml)
+  # http://localhost:9090/actuator/swagger-ui/index.html
+  # http://localhost:9090/actuator/openapi/springdocDefault
+  show-actuator: true # expose springdocs via actuator endpoints
+  use-management-port: true
+  # packagesToScan: "com.package1, com.package2"
+  # pathsToMatch: "/v1, /api/balance/**"
+  api-docs:
+    enabled: true
+    # path: "/api-docs"
+  swagger-ui:
+    enabled: true
+    # path: "swagger-ui-custom.html"
+    disable-swagger-default-url: false
+  override-with-generic-response: false
+
+management:
+  server:
+    # http://localhost:9090/actuator
+    port: 9090
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*" # openapi, swagger-ui
