@@ -1,4 +1,4 @@
-package com.hoffi.ai.ragdemo;
+package com.hoffi.ai.ragdemo.testing.cucumber;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

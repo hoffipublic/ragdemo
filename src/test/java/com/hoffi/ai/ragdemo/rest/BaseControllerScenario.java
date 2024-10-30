@@ -2,7 +2,7 @@ package com.hoffi.ai.ragdemo.rest;
 
 import static io.restassured.RestAssured.given;
 
-import com.hoffi.ai.ragdemo.CucumberBaseScenario;
+import com.hoffi.ai.ragdemo.testing.cucumber.CucumberBaseScenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

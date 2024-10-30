@@ -4,9 +4,9 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.hoffi.ai.ragdemo.CucumberBaseScenario;
 import com.hoffi.ai.ragdemo.dbmodel.Author;
 import com.hoffi.ai.ragdemo.dbrepository.AuthorRepository;
+import com.hoffi.ai.ragdemo.testing.cucumber.CucumberBaseScenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
